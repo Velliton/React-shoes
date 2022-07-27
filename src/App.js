@@ -1,30 +1,18 @@
 import Card from "./Components/Card";
 import Header from "./Components/Header";
+import Basket from "./Components/Basket";
+
+const arr=[
+  { name: 'Мужские Кроссовки Nike Blazer Mid Suede', price: 10000, imageurl:'img/sneakers/3.jpg'},
+  { name: 'Мужские Кроссовки Nike Air Max 270', price: 15000, imageurl:'img/sneakers/5.jpg'}
+];
+
+
 function App() {
   return (
     <div className="Wrapper">
-      <div className="overlay">
-        <div className="drawer">
-          <h2>Корзина</h2>
-            <div className="drawer-item">
-              <svg className="drawer-item-logo"></svg>
-              <div className="drawer-item-text">
-                <h5>Мужские Кроссовки Nike Air Max 270</h5>
-                <b>13 000 руб.</b>
-               <svg></svg> 
-              </div>
-            </div>
-
-
-
-        </div>
-        dddddd
-      </div>
-
+      <Basket/>
       <Header/>
-
-
-      
       <div className="content">
         <div className="Content-title">
           <h1>Все кроссовки</h1>
@@ -35,14 +23,16 @@ function App() {
         </div>
         <div className="sneakers">
         
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+  
+
+
+    {arr.map((obj)=>(
+    <b><Card name={obj.name} price={obj.price} imageurl={obj.imageurl}/></b>
+    )) } 
+
+
+
       
-
-
-
         </div>
         .....
       </div>

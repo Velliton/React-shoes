@@ -173,8 +173,12 @@ cursor: pointer;
     height: 100%;
     z-index: 9;
     display: none;
+    
   }
-  .drawer{
+
+  .basket{
+    display: flex;
+    flex-direction: column;
     position: absolute;
     width: 385px;
     height: 100%;
@@ -182,4 +186,32 @@ cursor: pointer;
     top: 0px;
     background: #FFFFFF;
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    
   }
+.basket-header{
+  margin-top: 30px;
+  margin-left: 30px;
+  font-size: 24px;
+}
+.basket-content{
+  flex:1;
+ 
+}
+  .basket-item{
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+  }
+.basket-item-text{
+  margin-left: 20px;
+  max-width: 150px;
+  font-size: 14px;
+  margin-right: 12px;
+}
+.basket-item-close{
+  opacity: 0.6;
+  &:hover{
+    opacity: 1;
+    cursor: pointer;
+  }
+}
