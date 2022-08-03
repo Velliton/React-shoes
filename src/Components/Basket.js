@@ -1,8 +1,8 @@
-function Basket() {
+function Basket(props) {
     return(
     <div className="overlay">
         <div className="basket">
-        <h2 className="basket-header">Корзина</h2>
+        <h2 className="basket-header">Корзина<img onClick={props.onClose} className="close-btn" src="/img/close.svg"></img></h2>
             <div className="basket-content">
             <div className="basket-item">
                 <img width={70} height={70}  src="img/sneakers/2.jpg"  className="basket-item-logo"></img>

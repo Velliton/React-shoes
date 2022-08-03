@@ -20,29 +20,27 @@ const arrTest1=[
 
 function App() {
 
-  const test3=React.useState(5);
-  console.log(test3);
+const [cartOpened,setCartOpened]=React.useState(false);
 
 
+/*   const [count,setCount]=React.useState(5);
+  
 
 
-let count=5;
 const plus=()=>{
-  count++;
-  console.log(count);
-} 
+  setCount(count+1);}
+
 const minus=()=>{
-  count--;
-  console.log(count);
-}
+  setCount(count-1);
+} */
 
   return (
     <div className="Wrapper">
-      <center>
+{/*       <center>
         <h1>{count}</h1>
         <button onClick={plus}>+</button>
         <button onClick={()=>minus()}>-</button>
-      </center>
+      </center> */}
 
 
 
@@ -51,8 +49,8 @@ const minus=()=>{
 
 
 
-      <Basket/>
-      <Header/>
+      {cartOpened?<Basket onClose={()=>setCartOpened(false)}/>:null}
+      <Header onClickCard={()=>setCartOpened(true)}/>
       <div className="content">
         <div className="Content-title">
           <h1>Все кроссовки</h1>

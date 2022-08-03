@@ -1,8 +1,21 @@
+import React, { useState } from "react";
 function Card(props) {
     /* const onClickButton=()=>{alert(props.price);} */
-   
-   
-   
+
+    const [isAdded,setIsAdded]=React.useState(false);
+    console.log(useState);
+
+    const onClickPlus=()=>{
+        if (isAdded===true) {
+            setIsAdded(false)
+        } else {
+            setIsAdded(true)
+        }
+        //setIsAdded(!isAdded);  тоже работает инвертирование
+    }
+
+    console.log(isAdded);
+
     return (
         <div className="card">
             <div className="favorite" onClick={props.onFavorite}>
@@ -15,9 +28,9 @@ function Card(props) {
                     <span>Цена:</span>
                     <b>{props.price}</b>
                 </div>
-                <button className="button" onClick={props.addClick}>
-                    <img width={11} height={11} src="img/add.svg" alt="Plus"/>
-                </button>
+        
+                    <img className='plus' onClick={onClickPlus}  src={isAdded ? "/img/ok.svg" : "/img/add.svg"} alt="Plus"/>
+        
                 </div>
             </div> 
         );    
