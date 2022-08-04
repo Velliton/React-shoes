@@ -6,47 +6,22 @@ import React from "react";
 
 
 
-const arr=[
-  { name: 'Мужские Кроссовки Nike Blazer Mid Suede', price: 10000, imageurl:'img/sneakers/3.jpg'},
-  { name: 'Мужские Кроссовки Nike Air Max 270', price: 15000, imageurl:'img/sneakers/5.jpg'}
-];
-
-const arrTest1=[
-  {city:'Moskow', street:'Lenina', text:'good street'},
-  {city:'Peter', street:'sham', text:'bad street'},
-  {city:'erw', street:'sds', text:'not street'},
-  {city:'sdf', street:'hhhh', text:'fuck'}
-]
 
 function App() {
-
+const [items,setItems] =React.useState([]);
 const [cartOpened,setCartOpened]=React.useState(false);
 
-
-/*   const [count,setCount]=React.useState(5);
-  
-
-
-const plus=()=>{
-  setCount(count+1);}
-
-const minus=()=>{
-  setCount(count-1);
-} */
+React.useEffect(()=>{
+const resp=fetch('https://62ebe5f9705264f263e31695.mockapi.io/items').then((res)=>{
+  return res.json();
+})
+.then((json)=>{
+  setItems(json);
+});
+},[]);
 
   return (
     <div className="Wrapper">
-{/*       <center>
-        <h1>{count}</h1>
-        <button onClick={plus}>+</button>
-        <button onClick={()=>minus()}>-</button>
-      </center> */}
-
-
-
-
-
-
 
 
       {cartOpened?<Basket onClose={()=>setCartOpened(false)}/>:null}
@@ -64,7 +39,7 @@ const minus=()=>{
   
 
 
-    {arr.map((obj)=>(
+    {items.map((obj)=>(
     <Card 
     name={obj.name} 
     price={obj.price} 
