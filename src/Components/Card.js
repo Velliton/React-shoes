@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-function Card(props) {
+function Card({onFavorite, imageurl, price, name, addClick}) {
     /* const onClickButton=()=>{alert(props.price);} */
 
     const [isAdded,setIsAdded]=React.useState(false);
     
 
     const onClickPlus=()=>{
-        if (isAdded===true) {
-            setIsAdded(false)
-        } else {
-            setIsAdded(true)
-        }
-        //setIsAdded(!isAdded);  тоже работает инвертирование
+        addClick({
+            imageurl, 
+            price,
+            name
+        });
+        
+        setIsAdded(!isAdded);  
     }
 
     const [like,setLike]=React.useState(false);
@@ -19,19 +20,19 @@ function Card(props) {
         setLike(!like);
     }
 
-    console.log(isAdded);
+   
 
     return (
         <div className="card">
-            <div className="favorite" onClick={props.onFavorite}>
+            <div className="favorite" onClick={onFavorite}>
                 <img onClick={onClickLike} src={like?"/img/like.svg":"/img/dislike.svg"} alt="likes"/>
             </div>
-            <img width={133} height={112} src={props.imageurl} alt="Sneakers1"></img>
-            <h5>{props.name}</h5>
+            <img width={133} height={112} src={imageurl} alt="Sneakers1"></img>
+            <h5>{name}</h5>
             <div className="cardBottom">
                 <div className="cardBottom_price">
                     <span>Цена:</span>
-                    <b>{props.price}</b>
+                    <b>{price}</b>
                 </div>
         
                     <img className='plus' onClick={onClickPlus}  src={isAdded ? "/img/ok.svg" : "/img/add.svg"} alt="Plus"/>

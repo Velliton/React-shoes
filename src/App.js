@@ -9,7 +9,9 @@ import React from "react";
 
 function App() {
 const [items,setItems] =React.useState([]);
+const [cartItems,setCartItems]=React.useState([]);
 const [cartOpened,setCartOpened]=React.useState(false);
+
 
 React.useEffect(()=>{
 const resp=fetch('https://62ebe5f9705264f263e31695.mockapi.io/items').then((res)=>{
@@ -20,11 +22,20 @@ const resp=fetch('https://62ebe5f9705264f263e31695.mockapi.io/items').then((res)
 });
 },[]);
 
+
+const onAddToCart=(obj)=>{
+  setCartItems(prev=>[...prev,obj])
+};
+
+console.log(cartItems);
+
+
+
   return (
     <div className="Wrapper">
 
 
-      {cartOpened?<Basket onClose={()=>setCartOpened(false)}/>:null}
+      {cartOpened?<Basket items={cartItems} onClose={()=>setCartOpened(false)}/>:null}
       <Header onClickCard={()=>setCartOpened(true)}/>
       <div className="content">
         <div className="Content-title">
@@ -39,17 +50,17 @@ const resp=fetch('https://62ebe5f9705264f263e31695.mockapi.io/items').then((res)
   
 
 
-    {items.map((obj)=>(
+    {items.map((item)=>(
     <Card 
-    name={obj.name} 
-    price={obj.price} 
-    imageurl={obj.imageurl} 
+    name={item.name} 
+    price={item.price} 
+    imageurl={item.imageurl} 
     onFavorite={()=>console.log('нрав')}
-    addClick={()=>console.log('нажал')}/>
+    addClick={(obj)=>onAddToCart(item)}/>
     )) } 
     
         </div>
-        
+           
 {/*     {
       arrTest1.map((obj2)=>(
         <Test key={obj2.key} city={obj2.city} street1={obj2.street} text={obj2.text}/>
