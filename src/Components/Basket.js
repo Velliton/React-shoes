@@ -1,4 +1,4 @@
-function Basket({onClose, items=[123]}) {
+function Basket({onClose, onRemove, items=[123]}) {
     
     return(
     <div className="overlay">
@@ -13,7 +13,7 @@ function Basket({onClose, items=[123]}) {
                             <p className="basket-item-name">{obj.name}</p>
                             <b className="basket-item-price">{obj.price}</b>
                         </div>
-                        <img width={32} height={32} src="img/close.svg" className="basket-item-close"></img>
+                        <img width={32} height={32} src="img/close.svg" className="basket-item-close" onClick={()=>onRemove(obj.id)}></img>
                     </div>
                 </div>
                 
