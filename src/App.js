@@ -12,6 +12,7 @@ const [items,setItems] =React.useState([]);
 const [cartItems,setCartItems]=React.useState([]);
 const [cartOpened,setCartOpened]=React.useState(false);
 const [searchValue, setSearchValue]=React.useState('');
+const [favorites,setFavorites]=React.useState([]);
 
 /*  отправляем запрос к серверу получаем json */
 React.useEffect(()=>{
@@ -39,8 +40,13 @@ const onAddToCart=(obj)=>{
 
 const onRemoveItem=(id)=>{
   console.log(id);
-  /* axios.delete(`https://62ebe5f9705264f263e31695.mockapi.io/Card/${id}`) */
+   axios.delete(`https://62ebe5f9705264f263e31695.mockapi.io/Card/${id}`); 
    setCartItems((prev)=>prev.filter(item=>item.id!==id));
+}
+
+const onAddToFavorite=(obj)=>{
+     axios.post(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites`,obj);
+     setFavorites((prev)=>[...prev,obj]);
 }
 
 
@@ -76,8 +82,8 @@ const onChangeSearchInput =(event)=>
     name={item.name} 
     price={item.price} 
     imageurl={item.imageurl} 
-    onFavorite={()=>console.log('нрав')}
-    addClick={(obj)=>onAddToCart(item)}/>
+    onFavorite={(obj)=>onAddToFavorite(obj)}
+    addClick={(obj)=>onAddToCart(obj)}/>
     )) } 
     
         </div>

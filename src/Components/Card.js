@@ -15,17 +15,28 @@ function Card({onFavorite, imageurl, price, name, addClick}) {
         setIsAdded(!isAdded);  
     }
 
+    
+
     const [like,setLike]=React.useState(false);
     const onClickLike=()=>{
         setLike(!like);
+    }
+    const onClickFav=()=>{
+        onFavorite({
+            imageurl, 
+            price,
+            name
+        });
+        
+        setLike(!like);  
     }
 
    
 
     return (
         <div className="card">
-            <div className="favorite" onClick={onFavorite}>
-                <img onClick={onClickLike} src={like?"/img/like.svg":"/img/dislike.svg"} alt="likes"/>
+            <div className="favorite" onClick={onClickLike}>
+                <img  onClick={onClickFav} src={like?"/img/like.svg":"/img/dislike.svg"} alt="likes"/>
             </div>
             <img width={133} height={112} src={imageurl} alt="Sneakers1"></img>
             <h5>{name}</h5>

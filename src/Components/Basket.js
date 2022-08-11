@@ -1,5 +1,8 @@
-function Basket({onClose, onRemove, items=[123]}) {
-    
+function Basket({onClose, onRemove, items=[]}) {
+    /* в items были 1,2,3 зачем хз */
+   /*  const sum=items.map(()=>sum+items.price);
+    console.log(sum); 
+    console.log(items); */
     return(
     <div className="overlay">
         <div className="basket">
