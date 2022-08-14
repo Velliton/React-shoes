@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-function Card({onFavorite, imageurl, price, name, addClick}) {
+function Card({onFavorite, imageurl, price, name, addClick, favorited=false}) {
     /* const onClickButton=()=>{alert(props.price);} */
 
     const [isAdded,setIsAdded]=React.useState(false);
@@ -17,7 +17,7 @@ function Card({onFavorite, imageurl, price, name, addClick}) {
 
     
 
-    const [like,setLike]=React.useState(false);
+    const [like,setLike]=React.useState(favorited);
     const onClickLike=()=>{
         setLike(!like);
     }

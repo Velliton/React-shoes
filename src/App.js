@@ -1,10 +1,11 @@
-import Card from "./Components/Card";
+
 import Header from "./Components/Header";
 import Basket from "./Components/Basket";
-import Test from "./Components/Test";
 import React from "react";
 import axios from "axios";
-
+import {Route, Link, Routes} from 'react-router-dom'
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 
 function App() {
@@ -13,6 +14,8 @@ const [cartItems,setCartItems]=React.useState([]);
 const [cartOpened,setCartOpened]=React.useState(false);
 const [searchValue, setSearchValue]=React.useState('');
 const [favorites,setFavorites]=React.useState([]);
+
+<Route path="/test">это тестовая инфа</Route>
 
 /*  отправляем запрос к серверу получаем json */
 React.useEffect(()=>{
@@ -29,8 +32,12 @@ axios.get('https://62ebe5f9705264f263e31695.mockapi.io/items').then ((res)=>{
 axios.get('https://62ebe5f9705264f263e31695.mockapi.io/Card').then ((res)=>{
   setCartItems(res.data);
 });
-},[]);
 
+axios.get('https://62ebe5f9705264f263e31695.mockapi.io/Favorites').then ((res)=>{
+  setFavorites(res.data);
+});
+},[]);
+console.log(favorites);
 
 const onAddToCart=(obj)=>{
   axios.post('https://62ebe5f9705264f263e31695.mockapi.io/Card',obj).then ((res)=>{
@@ -57,46 +64,40 @@ const onChangeSearchInput =(event)=>
 }
 
   return (
-    <div className="Wrapper">
 
+   
+    <div className="Wrapper">
+       
 
       {cartOpened?<Basket items={cartItems} onClose={()=>setCartOpened(false)} onRemove={onRemoveItem}/>:null}
       <Header onClickCard={()=>setCartOpened(true)}/>
-      <div className="content">
-        <div className="Content-title">
-          <h1>{searchValue?`поиск по запросу "${searchValue}"`:'все кроссовки'}</h1>
-          <div className="search-block">
-            <img src="img/search.svg" alt="search"/>
-            {searchValue&&<img onClick={()=>setSearchValue('')} className="search-clear"src="img/close.svg" alt="close"></img>}
-            <input onChange={onChangeSearchInput} value={searchValue} placeholder="Поиск"></input>
-          </div> 
-        </div>
-        <div className="sneakers">
-        
-  
-    {/* отрисовка компонента фильтрация по данным введенным в поиске */}
+      <Routes>
+        <Route 
+          path="/" exact
+          element={
+            <Home 
+              items={items} 
+                searchValue={searchValue} 
+                setSearchValue={setSearchValue} 
+                onChangeSearchInput={onChangeSearchInput}
+                onAddToFavorite={onAddToFavorite}
+                onAddToCart={onAddToCart}
+            />
+           } />
+      </Routes>
+      <Routes>
+        <Route 
+          path="/favorites" exact
+          element={
+            <Favorites 
+            items={favorites}
+            onAddToFavorite={onAddToFavorite}/>
+           } />
+      </Routes>
+     
 
-    { items.filter((item)=>item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>(
-    <Card 
-    key={item.id}
-    name={item.name} 
-    price={item.price} 
-    imageurl={item.imageurl} 
-    onFavorite={(obj)=>onAddToFavorite(obj)}
-    addClick={(obj)=>onAddToCart(obj)}/>
-    )) } 
-    
-        </div>
-           
-{/*     {
-      arrTest1.map((obj2)=>(
-        <Test key={obj2.key} city={obj2.city} street1={obj2.street} text={obj2.text}/>
-      ))
-    }
 
-<Test city="PIZDEC" street1='atat' text='ebana' />  */}
-        .....
-      </div>
+      
       
     </div>
   );
