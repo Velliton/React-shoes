@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-function Card({onFavorite, imageurl, price, name, addClick, favorited=false}) {
+function Card({onFavorite, imageurl, price, name, addClick, id, favorited=false}) {
     /* const onClickButton=()=>{alert(props.price);} */
 
     const [isAdded,setIsAdded]=React.useState(false);
@@ -23,6 +23,7 @@ function Card({onFavorite, imageurl, price, name, addClick, favorited=false}) {
     }
     const onClickFav=()=>{
         onFavorite({
+            id,
             imageurl, 
             price,
             name

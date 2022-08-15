@@ -2,7 +2,7 @@
 import Header from "./Components/Header";
 import Basket from "./Components/Basket";
 import React from "react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import {Route, Link, Routes} from 'react-router-dom'
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -51,9 +51,16 @@ const onRemoveItem=(id)=>{
    setCartItems((prev)=>prev.filter(item=>item.id!==id));
 }
 
-const onAddToFavorite=(obj)=>{
-     axios.post(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites`,obj);
-     setFavorites((prev)=>[...prev,obj]);
+const onAddToFavorite=async(obj)=>{
+  try {
+if (favorites.find((favObj)=>favObj.id==obj.id)) {
+  axios.delete(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites/${obj.id}`); 
+   
+} else {
+ const [data]= await axios.post(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites`,obj);
+  setFavorites((prev)=>[...prev,data]);
+}
+  } catch(error){alert('не удалось добавить в фавориты')}
 }
 
 
