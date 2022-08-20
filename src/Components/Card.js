@@ -7,6 +7,7 @@ function Card({onFavorite, imageurl, price, name, addClick, id, favorited=false}
 
     const onClickPlus=()=>{
         addClick({
+            id,
             imageurl, 
             price,
             name

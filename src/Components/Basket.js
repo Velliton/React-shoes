@@ -14,7 +14,7 @@ function Basket({onClose, onRemove, items=[]}) {
 
             <div className="basket-content">
                 {items.length>0?(<div>{items.map((obj)=>(
-                    <div>
+                    <div key={obj.id}>
                         <div className="basket-item">
                             <img width={70} height={70}  src={obj.imageurl}  className="basket-item-logo"></img>
                             <div className="basket-item-text">

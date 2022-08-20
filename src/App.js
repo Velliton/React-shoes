@@ -40,9 +40,13 @@ axios.get('https://62ebe5f9705264f263e31695.mockapi.io/Favorites').then ((res)=>
 console.log(favorites);
 
 const onAddToCart=(obj)=>{
-  axios.post('https://62ebe5f9705264f263e31695.mockapi.io/Card',obj).then ((res)=>{
-});
-  setCartItems(prev=>[...prev,obj])
+  if (cartItems.find((item)=>item.id==obj.id)) {
+    setCartItems((prev)=>prev.filter((item)=>item.id!==obj.id));
+  } else {
+    axios.post('https://62ebe5f9705264f263e31695.mockapi.io/Card',obj);
+    setCartItems((prev)=>[...prev,obj]);
+  }
+
 };
 
 const onRemoveItem=(id)=>{
