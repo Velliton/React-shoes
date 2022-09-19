@@ -19,31 +19,25 @@ const [favorites,setFavorites]=React.useState([]);
 
 /*  отправляем запрос к серверу получаем json */
 React.useEffect(()=>{
-/* const resp=fetch('https://62ebe5f9705264f263e31695.mockapi.io/items').then((res)=>{
-  return res.json();
-})
-.then((json)=>{
-  setItems(json);
-}); */
-
-axios.get('https://62ebe5f9705264f263e31695.mockapi.io/items').then ((res)=>{
-  setItems(res.data);
-});
-axios.get('https://62ebe5f9705264f263e31695.mockapi.io/Card').then ((res)=>{
-  setCartItems(res.data);
-});
-
-axios.get('https://62ebe5f9705264f263e31695.mockapi.io/Favorites').then ((res)=>{
-  setFavorites(res.data);
-});
+async function fetchData(){
+  const CartResponse= await axios.get('https://6325c9b14cd1a2834c448456.mockapi.io/Card');
+  const FavoritesResponse= await axios.get('https://6325c9b14cd1a2834c448456.mockapi.io/Favorites');
+  const itemsResponse=await axios.get('https://6325c9b14cd1a2834c448456.mockapi.io/Items');
+  setCartItems(CartResponse.data);
+  setFavorites(FavoritesResponse.data);
+  setItems(itemsResponse.data);
+  
+  }
+  fetchData();
 },[]);
-console.log(favorites);
+
 
 const onAddToCart=(obj)=>{
-  if (cartItems.find((item)=>item.id==obj.id)) {
-    setCartItems((prev)=>prev.filter((item)=>item.id!==obj.id));
+  if (cartItems.find(item=>Number(item.id)===Number(obj.id))) {
+    axios.delete(`https://6325c9b14cd1a2834c448456.mockapi.io/Card/${obj.id}`);
+    setCartItems((prev)=>prev.filter((item)=>Number(item.id)!==Number(obj.id)));
   } else {
-    axios.post('https://62ebe5f9705264f263e31695.mockapi.io/Card',obj);
+    axios.post('https://6325c9b14cd1a2834c448456.mockapi.io/Card',obj);
     setCartItems((prev)=>[...prev,obj]);
   }
 
@@ -51,17 +45,17 @@ const onAddToCart=(obj)=>{
 
 const onRemoveItem=(id)=>{
   console.log(id);
-   axios.delete(`https://62ebe5f9705264f263e31695.mockapi.io/Card/${id}`); 
+   axios.delete(`https://6325c9b14cd1a2834c448456.mockapi.io/Card/${id}`); 
    setCartItems((prev)=>prev.filter(item=>item.id!==id));
 }
 
 const onAddToFavorite=async(obj)=>{
   try {
-if (favorites.find((favObj)=>favObj.id==obj.id)) {
-  axios.delete(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites/${obj.id}`); 
+if (favorites.find((favObj)=>favObj.id===obj.id)) {
+  axios.delete(`https://6325c9b14cd1a2834c448456.mockapi.io/Favorites/${obj.id}`); 
    
 } else {
- const [data]= await axios.post(`https://62ebe5f9705264f263e31695.mockapi.io/Favorites`,obj);
+ const [data]= await axios.post(`https://6325c9b14cd1a2834c448456.mockapi.io/Favorites`,obj);
   setFavorites((prev)=>[...prev,data]);
 }
   } catch(error){alert('не удалось добавить в фавориты')}
@@ -89,6 +83,7 @@ const onChangeSearchInput =(event)=>
             <Home 
               items={items} 
                 searchValue={searchValue} 
+                cartItems={cartItems}
                 setSearchValue={setSearchValue} 
                 onChangeSearchInput={onChangeSearchInput}
                 onAddToFavorite={onAddToFavorite}
